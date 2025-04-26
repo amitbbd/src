@@ -1,0 +1,11 @@
+DISTRIBUTIONS="base.txz kernel.txz"
+HOSTNAME="fw.local"
+ROOT_PASSWORD="root"
+
+PARTITIONS=ada0
+PARTITIONS_SCHEME=GPT
+PARTITIONS_LAYOUT=auto
+
+TIMEZONE="Asia/Kolkata"
+LOCALE="en_US.UTF-8"
+KEYMAP="us"
