@@ -12,6 +12,8 @@ ISO_OUT=${ISO_DIR}/freebsd.iso
 MD_UNIT=0
 DISK_SIZE=2G
 
+INSTALLER_CONFIG=config/installerconfig
+
 .PHONY: all prepare download build_image extract configure make_iso clean distclean
 
 all: prepare download build_image extract configure make_iso
@@ -53,15 +55,14 @@ extract:
 configure:
 	@echo "[*] Configuring system files..."
 	mkdir -p ${WORK_DIR}/boot ${WORK_DIR}/etc
-	cp config/master.passwd ${WORK_DIR}/etc/master.passwd
-	cp config/loader ${WORK_DIR}/boot/loader
 	cp config/loader.conf ${WORK_DIR}/boot/loader.conf
 	cp config/rc.conf ${WORK_DIR}/etc/rc.conf
 	cp config/pf.conf ${WORK_DIR}/etc/pf.conf
 	cp config/fstab ${WORK_DIR}/etc/fstab
 
-	@echo "[*] Generating passwd.db and spwd.db using chroot..."
-	chroot ${WORK_DIR} pwd_mkdb -d /etc /etc/master.passwd
+	@echo "[*] Setting up installer autolaunch..."
+	echo "/usr/sbin/bsdinstall scripted /installerconfig" > ${WORK_DIR}/etc/rc.local
+	chmod +x ${WORK_DIR}/etc/rc.local
 
 	@echo "[*] Unmounting and detaching image..."
 	umount ${WORK_DIR}
@@ -76,9 +77,12 @@ make_iso:
 	umount ${WORK_DIR}
 	mdconfig -d -u ${MD_UNIT}
 
-	@echo "[*] Building ISO with bootable CD support..."
-	makefs -t cd9660 -o rockridge -o label=CustomBSD ${ISO_OUT} ${ISO_DIR}/cdroot
-	cp /boot/cdboot ${ISO_DIR}/cdboot
+	@echo "[*] Copying installerconfig..."
+	cp ${INSTALLER_CONFIG} ${ISO_DIR}/cdroot/installerconfig
+
+	@echo "[*] Copying distributions..."
+	cp ${DOWNLOAD_DIR}/base.txz ${ISO_DIR}/cdroot/
+	cp ${DOWNLOAD_DIR}/kernel.txz ${ISO_DIR}/cdroot/
 
 	@echo "[*] Adding boot catalog for CD boot..."
 	mkisofs -no-emul-boot -b boot/cdboot -r -J -V "CustomBSD" -o ${ISO_OUT} ${ISO_DIR}/cdroot
