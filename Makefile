@@ -38,22 +38,14 @@ build_image:
 	@echo "[*] Partitioning disk image..."
 	gpart create -s GPT md${MD_UNIT}
 	gpart add -t freebsd-boot -s 512K -i 1 md${MD_UNIT}
-	gpart add -t freebsd-zfs -a 1M -i 2 md${MD_UNIT}
-	gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 md${MD_UNIT}
+	gpart add -t freebsd-ufs -a 1M -i 2 md${MD_UNIT}
+	gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 md${MD_UNIT}
 
-	@echo "[*] Creating ZFS pool..."
-	zpool create -o altroot=${WORK_DIR} -o bootfs=zroot/ROOT/default zroot /dev/md${MD_UNIT}p2
+	@echo "[*] Creating filesystem..."
+	newfs -U /dev/md${MD_UNIT}p2
 
-	@echo "[*] Creating ZFS datasets..."
-	zfs create -o mountpoint=none zroot/ROOT
-	zfs create -o mountpoint=none zroot/ROOT/default
-	zfs create -o mountpoint=/ zroot/ROOT/default/root
-	zfs create -o mountpoint=/tmp zroot/tmp
-	zfs create -o mountpoint=/usr zroot/usr
-	zfs create -o mountpoint=/var zroot/var
-
-	@echo "[*] Mounting ZFS datasets..."
-	mount -t zfs zroot/ROOT/default/root ${WORK_DIR}
+	@echo "[*] Mounting filesystem..."
+	mount /dev/md${MD_UNIT}p2 ${WORK_DIR}
 
 extract:
 	@echo "[*] Extracting base and kernel..."
@@ -65,8 +57,8 @@ configure:
 	mkdir -p ${WORK_DIR}/boot ${WORK_DIR}/etc
 	cp config/loader.conf ${WORK_DIR}/boot/loader.conf
 	cp config/rc.conf ${WORK_DIR}/etc/rc.conf
-	cp config/fstab ${WORK_DIR}/etc/fstab
 	cp config/pf.conf ${WORK_DIR}/etc/pf.conf
+	cp config/fstab ${WORK_DIR}/etc/fstab
 
 	@echo "[*] Setting up installer autolaunch..."
 	echo "/usr/sbin/bsdinstall scripted /installerconfig" > ${WORK_DIR}/etc/rc.local
