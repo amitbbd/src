@@ -93,6 +93,8 @@ ca-certificates
 # =============================================================================
 python3
 python3-pip
+nodejs
+npm
 
 # wireless-tools
 # wpasupplicant
