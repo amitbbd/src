@@ -1,0 +1,115 @@
+# Minimal Linux ISO Package List
+# Edit this file to customize your ISO packages
+# Lines starting with # are comments and will be ignored
+
+# =============================================================================
+# CORE SYSTEM PACKAGES (Essential - Don't remove)
+# =============================================================================
+systemd
+systemd-sysv
+bash
+coreutils
+util-linux
+findutils
+grep
+sed
+gawk
+tar
+gzip
+xz-utils
+binutils
+init
+
+# =============================================================================
+# KERNEL AND BOOT (Essential for bootable system)
+# =============================================================================
+linux-image-amd64
+initramfs-tools
+initramfs-tools-core
+live-boot
+live-boot-initramfs-tools
+
+# =============================================================================
+# HARDWARE SUPPORT & DRIVERS
+# =============================================================================
+firmware-linux-free
+pciutils
+usbutils
+dmidecode
+lsb-release
+
+# =============================================================================
+# INSTALLATION TOOLS (For hardware installation)
+# =============================================================================
+parted
+fdisk
+e2fsprogs
+dosfstools
+grub-pc
+grub-common
+grub-efi-amd64
+grub-pc-bin
+grub-efi-amd64-bin
+grub2-common
+os-prober
+rsync
+debootstrap
+cpio
+
+# =============================================================================
+# NETWORK SUPPORT
+# =============================================================================
+curl
+wget
+openssh-client
+net-tools
+iproute2
+iputils-ping
+isc-dhcp-client
+
+# =============================================================================
+# USER MANAGEMENT & SECURITY
+# =============================================================================
+sudo
+passwd
+adduser
+login
+
+# =============================================================================
+# TEXT EDITORS & UTILITIES
+# =============================================================================
+nano
+less
+bash-completion
+
+# =============================================================================
+# SYSTEM UTILITIES
+# =============================================================================
+uuid-runtime
+ca-certificates
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+python3
+python3-pip
+
+# wireless-tools
+# wpasupplicant
+
+# Additional editors
+vim-tiny
+
+# System monitoring
+# htop
+# iotop
+
+# Compression tools
+# zip
+# unzip
+
+# =============================================================================
+# DEBUG TOOLS (Uncomment for troubleshooting)
+# =============================================================================
+strace
+tcpdump

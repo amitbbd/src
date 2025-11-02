@@ -1,2 +1,0 @@
-# Device        Mountpoint      FStype  Options Dump Pass#
-/dev/zvol/zroot/swap none           swap   sw      0     0

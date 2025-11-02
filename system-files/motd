@@ -1,0 +1,31 @@
+=== DEBIAN ISO - Minimal Linux Installation System ===
+
+██████╗ ███████╗██████╗ ██╗ █████╗ ███╗   ██╗    ██╗███████╗ ██████╗ 
+██╔══██╗██╔════╝██╔══██╗██║██╔══██╗████╗  ██║    ██║██╔════╝██╔═══██╗
+██║  ██║█████╗  ██████╔╝██║███████║██╔██╗ ██║    ██║███████╗██║   ██║
+██║  ██║██╔══╝  ██╔══██╗██║██╔══██║██║╚██╗██║    ██║╚════██║██║   ██║
+██████╔╝███████╗██████╔╝██║██║  ██║██║ ╚████║    ██║███████║╚██████╔╝
+╚═════╝ ╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═╝╚══════╝ ╚═════╝ 
+
+This is a live system that can install Linux to your hard drive.
+
+🚀 Automatic Installation:
+   This system automatically installs to hard drive on boot
+
+🤖 Installation process:
+   - Detects largest available disk (minimum 8GB)
+   - Automatically partitions and installs system
+   - Reboots when complete
+
+🔍 To check available disks:
+   lsblk                    (list all block devices)
+   sudo fdisk -l           (show detailed disk info)
+
+🔑 Login accounts:
+   installer / installer   (has sudo access)
+   root / root            (full access)
+
+📚 Useful commands:
+   nano /path/file        (edit files)
+   systemctl status       (check services)
+   ip addr show          (network info)

@@ -1,0 +1,2 @@
+# Sudoers configuration for installer user
+installer ALL=(ALL) NOPASSWD: ALL
